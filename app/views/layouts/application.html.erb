@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+        padding-top: 70px;
+    }
+
+    .container-fluid .jumbotron {
+        border-radius: 10px;
+    }
+
+    .dropdown-login-form {
+        padding: 15px;
+    }
+
+    .dropdown-login-form input, .dropdown-login-form button {
+        margin-top: 10px;
+        width: 20em;
+    }
+  </style>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <%= yield :head %>
+</head>
+<body>
+  <nav class='navbar navbar-inverse navbar-fixed-top'>
+    <div class='container-fluid'>
+        <div class='navbar-header'>
+            <a href="#" class='navbar-brand'>Reaper</a>
+        </div>
+
+        <div class='collapse navbar-collapse'>
+            <ul class='nav navbar-nav'>
+                <li><a href="#">About</a></li>
+                <li>
+                    <a href="{{url_for('soul.sacrifice')}}">
+                        <span class='glyphicon glyphicon-plus'></span>
+                        Sacrifice
+                    </a>
+                </li>
+                <li class='divider'></li>
+            </ul>
+            <ul class='nav navbar-nav navbar-right' id='navbar-auth'>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class='container-fluid'>
+    <%= yield :content %>
+</div>
+
+</body>
+</html>

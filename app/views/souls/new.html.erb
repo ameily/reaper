@@ -1,0 +1,99 @@
+<%= content_for :head do %>
+<title>Sacrifice - Reaper</title>
+<% end %>
+
+
+<% content_for :content do %>
+<div class='row'>
+    <div class='col-md-10 col-md-offset-1'>
+        <div class='page-header'>
+            <h1>Sacrifice <small>Create Idea</small></h1>
+        </div>
+
+
+        <div class='form-horizontal'>
+            <%= form_for :soul, url: souls_path, html: { :class => 'form-horizontal' } do |f| %>
+            <div class='form-group'>
+                <%= f.label :name, class: 'col-md-2 control-label' %>
+
+                <div class='col-md-7'>
+                    <%= f.text_field :name, class: 'form-control', :placeholder => 'Name (Required)' %>
+                </div>
+
+                <div class='col-md-3 form-message'>
+                    <% if @soul.errors.include? :name %>
+                        <ul>
+                            <% @soul.errors[:name].each do |e| %>
+                                <li class='text-danger'><%= e %></li>
+                            <% end %>
+                        </ul>
+                    <% end %>
+                </div>
+            </div>
+
+            <div class='form-group'>
+                <%= f.label :body, 'Description', class: 'col-md-2 control-label' %>
+
+                <div class='col-md-7'>
+                    <%= f.text_area :body, class: 'form-control', :placeholder => 'Description (Required)' %>
+                </div>
+
+                <div class='col-md-3 form-message'>
+                    <% if @soul.errors.include? :body %>
+                        <ul>
+                            <% @soul.errors[:body].each do |e| %>
+                                <li class='text-danger'><%= e %></li>
+                            <% end %>
+                        </ul>
+                    <% end %>
+                </div>
+            </div>
+
+            <div class='form-group'>
+                <%= f.label :loe, 'Level of Effort', class: 'col-md-2 control-label' %>
+
+                <div class='col-md-7'>
+                    <%= f.text_field :loe, class: 'form-control', :placeholder => 'Level of Effort (Optional)' %>
+                </div>
+
+                <div class='col-md-3 form-message'>
+                    <% if @soul.errors.include? :loe %>
+                        <ul>
+                            <% @soul.errors[:loe].each do |e| %>
+                                <li class='text-danger'><%= e %></li>
+                            <% end %>
+                        </ul>
+                    <% end %>
+                </div>
+            </div>
+
+            <div class='form-group'>
+                <%= f.label :lang, 'Language', class: 'col-md-2 control-label' %>
+
+                <div class='col-md-7'>
+                    <%= f.text_field :lang, class: 'form-control', :placeholder => 'Language (Optional)' %>
+                </div>
+
+                <div class='col-md-3 form-message'>
+                    <% if @soul.errors.include? :lang %>
+                        <ul>
+                            <% @soul.errors[:lang].each do |e| %>
+                                <li class='text-danger'><%= e %></li>
+                            <% end %>
+                        </ul>
+                    <% end %>
+                </div>
+            </div>
+
+            <div class='form-group'>
+                <div class='col-md-2'>&nbsp;</div>
+                <div class='col-md-7'>
+                    <%= f.submit "Sacrifice", class: 'btn btn-primary btn-lg' %>
+                </div>
+            </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% end %>
