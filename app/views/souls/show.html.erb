@@ -1,9 +1,178 @@
-<p>
-    <strong>Name:</strong>
-    <%= @soul.name %>
-</p>
+<%= content_for :head do %>
+<title><%= @soul.name %> - Reaper</title>
 
-<p>
-    <strong>Description:</strong>
-    <%= @soul.body %>
-</p>
+<style>
+    .attr-table {
+        width: 100%;
+    }
+
+    .attr-table th {
+        
+    }
+
+    .attr-table td, .attr-table th {
+        padding: 2px;
+    }
+
+    hr {
+        margin: 7px 5px;
+    }
+
+    .soul-header {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        margin: 5px;
+    }
+
+    ul.soul-refs {
+
+    }
+
+    ul.soul-refs li {
+        padding: 2px 5px;
+        border-radius: 5px;
+    }
+
+    ul.soul-refs li:hover {
+        background-color:#eee;
+    }
+    .tab-pane {
+        padding: 10px;
+    }
+</style>
+<% end %>
+
+<%= content_for :content do %>
+
+<div class='row'>
+    <div class='col-md-12'>
+        <div class='page-header' style='margin-top: 0px'>
+            <h1><%= @soul.name %> <small>Reaper</small></h1>
+        </div>
+    </div>
+</div>
+
+<div class='row'>
+    <div class='col-md-12'>
+        <div class='soul-header'>
+            <table class='attr-table'>
+                <tr>
+                    <th>Author:</th>
+                    <td><a href='#'>Adam Meily</a></td>
+                    <th>Created:</th>
+                    <td><%= @soul.created_at.strftime "%d %b %Y @ %H:%M" %></td>
+                </tr>
+                <tr>
+                    <th>ID:</th>
+                    <td><%= @soul.id %></td>
+                    <th>Updated:</th>
+                    <td><%= @soul.updated_at.strftime "%d %b %Y @ %H:%M" %></td>
+                </tr>
+            </table>
+            
+            <hr>
+
+            <div>
+                <div><strong>Description</strong></div>
+                <div>
+                    <%= @soul.description %>
+                </div>
+            </div>
+
+            <hr>
+
+            <div>
+                <div>
+                    <strong>Citations</strong>
+                    <div class='pull-right' ><a href='#'>Add</a></div>
+                </div>
+                <ul class='list-unstyled soul-refs'>
+                    <li>
+                        <a href='#'>http://getbootstrap.com/css/</a>
+                        <div class='pull-right'>
+                            <a href='#'><span class='glyphicon glyphicon-trash'></span></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div>
+                <div>
+                    <strong>Soul Links</strong>
+                    <div class='pull-right'><a href='#'>Add</a></div>
+                </div>
+                <ul class='list-unstyled soul-refs'>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div>
+                <div>
+                    <strong>Attachments</strong>
+                    <div class='pull-right'><a href='#'>Add</a></div>
+                </div>
+                <ul class='list-unstyled soul-refs'>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div>
+                <div>
+                    <strong>Submissions</strong>
+                    <div class='pull-right' ><a href='#'>Add</a></div>
+                </div>
+                <ul class='list-unstyled soul-refs'>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='row'>
+    <div class='col-md-12'>
+        <div style='margin: 5px'>
+            <h3>
+                <span class='glyphicon glyphicon-comment'></span>
+                Comments
+            </h3>
+            <div>
+                <ul class='nav nav-tabs'>
+                    <li class='active'>
+                        <a href='#comment-write' data-toggle='tab'>
+                            <span class='glyphicon glyphicon-pencil'></span>
+                            Write
+                        </a>
+                    </li>
+                    <li>
+                        <a href='#comment-preview' data-toggle='tab'>
+                            <span class='glyphicon glyphicon-picture'></span>
+                            Preview
+                        </a>
+                    </li>
+                </ul>
+
+                <div class='tab-content'>
+                    <div class='tab-pane active' id='comment-write'>
+                        <textarea placeholder='Comment' class='form-control' rows='5'></textarea>
+                        <div class='text-right' style='margin-top: 5px'>
+                            <button class='btn btn-primary'>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class='tab-pane' id='comment-preview'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<% end %>
