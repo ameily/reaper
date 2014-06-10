@@ -1,3 +1,3 @@
 class Soul < ActiveRecord::Base
-    validates :name, :body, presence: true
+    validates :name, :description, presence: true
 end

@@ -32,16 +32,16 @@
             </div>
 
             <div class='form-group'>
-                <%= f.label :body, 'Description', class: 'col-md-2 control-label' %>
+                <%= f.label :description, class: 'col-md-2 control-label' %>
 
                 <div class='col-md-7'>
-                    <%= f.text_area :body, class: 'form-control', :placeholder => 'Description (Required)' %>
+                    <%= f.text_area :description, class: 'form-control', :placeholder => 'Description (Required)' %>
                 </div>
 
                 <div class='col-md-3 form-message'>
-                    <% if @soul.errors.include? :body %>
+                    <% if @soul.errors.include? :description %>
                         <ul>
-                            <% @soul.errors[:body].each do |e| %>
+                            <% @soul.errors[:description].each do |e| %>
                                 <li class='text-danger'><%= e %></li>
                             <% end %>
                         </ul>
@@ -60,24 +60,6 @@
                     <% if @soul.errors.include? :loe %>
                         <ul>
                             <% @soul.errors[:loe].each do |e| %>
-                                <li class='text-danger'><%= e %></li>
-                            <% end %>
-                        </ul>
-                    <% end %>
-                </div>
-            </div>
-
-            <div class='form-group'>
-                <%= f.label :lang, 'Language', class: 'col-md-2 control-label' %>
-
-                <div class='col-md-7'>
-                    <%= f.text_field :lang, class: 'form-control', :placeholder => 'Language (Optional)' %>
-                </div>
-
-                <div class='col-md-3 form-message'>
-                    <% if @soul.errors.include? :lang %>
-                        <ul>
-                            <% @soul.errors[:lang].each do |e| %>
                                 <li class='text-danger'><%= e %></li>
                             <% end %>
                         </ul>
