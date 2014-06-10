@@ -5,6 +5,9 @@ class SoulsController < ApplicationController
 
     def create
         @soul = Soul.new(create_params)
+        @soul.harvest_count = 0
+        @soul.reap_count = 0
+        @soul.rot_count = 0
         if @soul.save
             redirect_to @soul
         else
@@ -21,6 +24,6 @@ class SoulsController < ApplicationController
     end
 
     private def create_params
-        params.require(:soul).permit(:name, :body)
+        params.require(:soul).permit(:name, :description)
     end
 end
