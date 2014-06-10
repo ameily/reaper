@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20140608051210) do
 
   create_table "souls", force: true do |t|
     t.string   "name"
-    t.text     "body"
+    t.text     "description"
     t.integer  "reap_count"
     t.integer  "rot_count"
     t.integer  "harvest_count"
