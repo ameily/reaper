@@ -1,5 +1,6 @@
 <%= content_for :head do %>
 <title><%= @soul.name %> - Reaper</title>
+<%= javascript_include_tag 'markdown.min', 'data-turbolinks-track' => true %>
 
 <style>
     .attr-table {
@@ -40,7 +41,90 @@
     .tab-pane {
         padding: 10px;
     }
+
+    .comments h1, .comments h2, .comments h3, .comments h4, .comments h5, .comments h6 {
+        font-size: 100%;
+        font-weight: bold;
+    }
+
+    blockquote {
+        font-size: 90%;
+        font-family: monospace;
+    }
 </style>
+
+<script>
+$(document).ready(function() {
+    $("#submission-form").hide();
+    $("#submission-add").click(function() {
+        if($("#submission-form").is(':visible')) {
+            $(this).text('Add');
+        } else {
+            $(this).text('Cancel');
+        }
+
+        $("#submission-form").slideToggle();
+        return false;
+    });
+
+    $("#comment-preview-tab").on("show.bs.tab", function(e) {
+        $("#comment-preview").html(markdown.toHTML($("#comment-text").val()));
+    });
+
+    $("#new_citation").on('ajax:success', function(e, data, status, xhdr) {
+        addCitation(data.id, data.url);
+        $("#citation_url").val('');
+    }).on('ajax:error', function() {
+
+    }).hide();
+
+    $(".add-ref-btn").each(function() {
+        var $this = $(this);
+        $this.click(function() {
+            var $target = $($this.data('target'));
+            if($target.is(":visible")) {
+                $this.text('Add');
+            } else {
+                $this.text('Cancel');
+            }
+
+            $target.slideToggle();
+            return false;
+        });
+    });
+
+
+    <% @soul.citations.each do |citation| %>
+        addCitation(<%=citation.id%>, "<%=citation.url%>");
+    <% end %>
+
+
+
+});
+
+function addCitation(id, url) {
+    $("#citation-list").append(
+        $("<li>").append(
+            $("<a>").attr('href', url).attr('target', '_blank').text(url)
+        ).append(
+            $("<a href='#' class='pull-right btn btn-danger btn-xs'>").append(
+                $("<span class='glyphicon glyphicon-trash'>")
+            ).click(function() {
+                $(this).parent().remove();
+                $.ajax({
+                    url: "/souls/"+<%=@soul.id%>+'/citations/'+id,
+                    dataType: 'json',
+                    type: 'POST',
+                    data: { _method: 'DELETE' },
+                });
+                return false;
+            })
+        )
+    );
+}
+
+</script>
+
 <% end %>
 
 <%= content_for :content do %>
@@ -85,16 +169,28 @@
             <div>
                 <div>
                     <strong>Citations</strong>
-                    <div class='pull-right' ><a href='#'>Add</a></div>
+                    <div class='pull-right' ><a href='#' class='add-ref-btn' data-target='#new_citation'>Add</a></div>
                 </div>
-                <ul class='list-unstyled soul-refs'>
+                <ul class='list-unstyled soul-refs' id='citation-list'>
+                    <!--
                     <li>
                         <a href='#'>http://getbootstrap.com/css/</a>
                         <div class='pull-right'>
                             <a href='#'><span class='glyphicon glyphicon-trash'></span></a>
                         </div>
                     </li>
+                    -->
                 </ul>
+
+
+                <%= form_for([@soul, @soul.citations.build], remote: true) do |f| %>
+                    <div class='row'>
+                        <div class='col-md-6'>
+                            <%= f.text_field :url, class: 'form-control input-sm col-md-12', :placeholder => 'URL' %>
+                        </div>
+                        <%= f.submit "Save", class: 'btn btn-info btn-sm col-md-2' %>
+                    </div>
+                <% end %>
             </div>
 
             <hr>
@@ -124,10 +220,16 @@
             <div>
                 <div>
                     <strong>Submissions</strong>
-                    <div class='pull-right' ><a href='#'>Add</a></div>
+                    <div class='pull-right' ><a href='#' id='submission-add'>Add</a></div>
                 </div>
                 <ul class='list-unstyled soul-refs'>
                 </ul>
+                <!--<div class='form-inline' id='submission-form'>
+                    <input type='text' class='form-control input-sm' placeholder='Customer'>
+                    <input type='file' class='form-control input-sm'>
+                    <button class='btn btn-sm btn-info'>Save</button>
+                </div>-->
+
             </div>
         </div>
     </div>
@@ -140,7 +242,7 @@
                 <span class='glyphicon glyphicon-comment'></span>
                 Comments
             </h3>
-            <div>
+            <div class='comments'>
                 <ul class='nav nav-tabs'>
                     <li class='active'>
                         <a href='#comment-write' data-toggle='tab'>
@@ -149,7 +251,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href='#comment-preview' data-toggle='tab'>
+                        <a href='#comment-preview' data-toggle='tab' id='comment-preview-tab'>
                             <span class='glyphicon glyphicon-picture'></span>
                             Preview
                         </a>
@@ -157,17 +259,23 @@
                 </ul>
 
                 <div class='tab-content'>
-                    <div class='tab-pane active' id='comment-write'>
-                        <textarea placeholder='Comment' class='form-control' rows='5'></textarea>
-                        <div class='text-right' style='margin-top: 5px'>
-                            <button class='btn btn-primary'>
-                                Submit
-                            </button>
-                        </div>
+                    <div class='tab-pane active' id='comment-write-tab'>
+                        <%= form_for([@soul, @soul.comments.build], remote: true) do |f| %>
+                            <%= f.text_area :body, class: 'form-control', :placeholder => 'Write a Comment', :rows => 5 %>
+                            <div class='text-right' style='margin-top: 5px'>
+                                <%= f.submit "Save", class: "btn btn-primary btn-lg" %>
+                            </div>
+                        <% end %>
                     </div>
 
                     <div class='tab-pane' id='comment-preview'>
                     </div>
+                    <!--
+                    quote:
+                        *Adam Meily* said:
+                        > This is some bullshit
+                    -->
+
                 </div>
             </div>
         </div>
