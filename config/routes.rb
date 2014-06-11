@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   root 'site#index'
 
-  resources :souls
+  resources :souls do
+    resources :citations
+    resources :comments
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
