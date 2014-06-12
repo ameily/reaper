@@ -1,5 +1,24 @@
 <%= content_for :head do %>
 <title>Sacrifice - Reaper</title>
+
+<style>
+    .tab-pane {
+        padding: 10px;
+    }
+
+    .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+        font-size: 100%;
+        font-weight: bold;
+    }
+</style>
+
+<script>
+$(document).ready(function() {
+    markdown_editor($("#soul_description"));
+});
+</script>
+
+
 <% end %>
 
 
@@ -35,7 +54,7 @@
                 <%= f.label :description, class: 'col-md-2 control-label' %>
 
                 <div class='col-md-7'>
-                    <%= f.text_area :description, class: 'form-control', :placeholder => 'Description (Required)' %>
+                    <%= f.text_area :description, class: 'form-control', :placeholder => 'Description (Required)', :rows => 20 %>
                 </div>
 
                 <div class='col-md-3 form-message'>
