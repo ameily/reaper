@@ -1,6 +1,5 @@
 <%= content_for :head do %>
 <title><%= @soul.name %> - Reaper</title>
-<%= javascript_include_tag 'markdown.min', 'data-turbolinks-track' => true %>
 
 <style>
     .attr-table {
@@ -42,7 +41,7 @@
         padding: 10px;
     }
 
-    .comments h1, .comments h2, .comments h3, .comments h4, .comments h5, .comments h6 {
+    .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
         font-size: 100%;
         font-weight: bold;
     }
@@ -98,7 +97,8 @@ $(document).ready(function() {
         addCitation(<%=citation.id%>, "<%=citation.url%>");
     <% end %>
 
-
+    markdown_editor($("#comment_body"));
+    $("#soul-description").html(marked($("#soul-description").html()));
 
 });
 
@@ -159,9 +159,7 @@ function addCitation(id, url) {
 
             <div>
                 <div><strong>Description</strong></div>
-                <div>
-                    <%= @soul.description %>
-                </div>
+                <div id='soul-description'><%= @soul.description %></div>
             </div>
 
             <hr>
@@ -243,6 +241,15 @@ function addCitation(id, url) {
                 Comments
             </h3>
             <div class='comments'>
+
+
+                <%= form_for([@soul, @soul.comments.build], remote: true) do |f| %>
+                    <%= f.text_area :body, class: 'form-control', :placeholder => 'Write a Comment', :rows => 5 %>
+                    <div class='text-right' style='margin-top: 5px'>
+                        <%= f.submit "Save", class: "btn btn-primary btn-lg" %>
+                    </div>
+                <% end %>
+                <!--
                 <ul class='nav nav-tabs'>
                     <li class='active'>
                         <a href='#comment-write' data-toggle='tab'>
@@ -270,13 +277,8 @@ function addCitation(id, url) {
 
                     <div class='tab-pane' id='comment-preview'>
                     </div>
-                    <!--
-                    quote:
-                        *Adam Meily* said:
-                        > This is some bullshit
-                    -->
-
                 </div>
+                -->
             </div>
         </div>
     </div>
