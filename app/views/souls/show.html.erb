@@ -51,7 +51,7 @@
         font-family: monospace;
     }
 
-    .comment {
+    .journal {
         margin: 5px;
         padding: 10px;
         border-radius: 10px;
@@ -73,12 +73,12 @@ $(document).ready(function() {
         $("#citation_url").parent().addClass('has-error');
     }).hide();
 
-    $("#new_comment").on('ajax:success', function(e, data, status, xhdr){
-        addComment(data);
-        $("#comment_body").removeClass('has-error');
-        $("#comment_body").val('');
+    $("#new_journal").on('ajax:success', function(e, data, status, xhdr){
+        addJournal(data);
+        $("#journal_body").removeClass('has-error');
+        $("#journal_body").val('');
     }).on('ajax:error', function() {
-        $("#comment_body").parent().addClass('has-error');
+        $("#journal_body").parent().addClass('has-error');
     });
 
     $("#new_attachment").on('ajax:success', function(e, data, status, xhdr) {
@@ -120,15 +120,15 @@ $(document).ready(function() {
         addCitation(<%=citation.id%>, "<%=escape_javascript citation.url%>");
     <% end %>
 
-    <% @soul.comments.each do |comment| %>
-        addComment(<%=comment.to_json.html_safe%>);
+    <% @soul.journals.each do |journal| %>
+        addJournal(<%=journal.to_json.html_safe%>);
     <% end %>
 
     <% @soul.attachments.each do |attachment| %>
         addAttachment(<%=attachment.to_json(:methods => ['attachment_url']).html_safe%>);
     <% end %>
 
-    markdown_editor($("#comment_body"));
+    markdown_editor($("#journal_body"));
     $("#soul-description").html(marked($("#soul-description").html()));
 });
 
@@ -153,14 +153,14 @@ function addCitation(id, url) {
     );
 }
 
-function addComment(obj) {
+function addJournal(obj) {
     var parts = obj.body.split('\n');
     var quote = '';
     for(var i in parts) {
         quote += '> ' + parts[i] + '\n';
     }
 
-    $("#comment-list").append(
+    $("#journal-list").append(
         $("<div class='panel panel-default'>").append(
             $("<div class='panel-heading'>").append(
                 $("<strong>").text("Adam Meily")
@@ -174,7 +174,7 @@ function addComment(obj) {
         ).append(
             $("<div class='panel-footer'>").append(
                 $("<button class='btn btn-xs btn-success'><span class='glyphicon glyphicon-comment'></span> Quote</button>").click(function() {
-                    $("#comment_body").val(
+                    $("#journal_body").val(
                         "*Adam Meily* said:\n" +
                         "\n" +
                         quote + '\n\n'
@@ -328,10 +328,10 @@ function addAttachment(obj) {
                 <span class='glyphicon glyphicon-comment'></span>
                 Comments
             </h3>
-            <div id='comment-list'></div>
+            <div id='journal-list'></div>
 
 
-            <%= form_for([@soul, @soul.comments.build], remote: true) do |f| %>
+            <%= form_for([@soul, @soul.journals.build], remote: true) do |f| %>
                 <div class='form-group'>
                     <%= f.text_area :body, class: 'form-control', :placeholder => 'Write a Comment', :rows => 5 %>
                 </div>

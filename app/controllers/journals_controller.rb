@@ -1,18 +1,23 @@
-class CommentsController < ApplicationController
+class JournalsController < ApplicationController
     def create
         @soul = Soul.find(params[:soul_id])
         #redirect_to soul_path(@soul)
-        @comment = @soul.comments.create(comment_params)
+        @journal = @soul.journals.new(journal_params)
+        @journal.cat = 'comment'
         
         respond_to do |format|
-            format.json { render json: @comment, status: :created }
+            if @journal.save
+                format.json { render json: @journal, status: :created }
+            else
+                format.json { render json: @journal.errors.messages, status: :bad_request }
+            end
         end
     end
 
     def destroy
-        @comment = Comment.find(params[:id])
+        @journal = Journal.find(params[:id])
         respond_to do |format|
-            if @comment.destroy
+            if @journal.destroy
                 format.json { render json: { }, status: :ok }
             else
                 
@@ -20,7 +25,7 @@ class CommentsController < ApplicationController
         end
     end
  
-    private def comment_params
-        params.require(:comment).permit(:body)
+    private def journal_params
+        params.require(:journal).permit(:body)
     end
 end
