@@ -274,6 +274,19 @@ function addAttachment(obj) {
             <div>
                 <div><strong>Description</strong></div>
                 <div id='soul-description'><%= @soul.description %></div>
+                <div class='text-right'>
+                    <a href="<%= url_for :controller => 'souls', :action => 'convert_body', :format => 'docx' %>" target='_blank'>
+                        docx
+                    </a>
+                    &bull;
+                    <a href="<%= url_for :controller => 'souls', :action => 'convert_body', :format => 'pdf' %>" target='_blank'>
+                        pdf
+                    </a>
+                    &bull;
+                    <a href="<%= url_for :controller => 'souls', :action => 'convert_body', :format => 'raw' %>" target='_blank'>
+                        raw
+                    </a>
+                </div>
             </div>
 
             <hr>

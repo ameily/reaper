@@ -41,3 +41,4 @@ gem 'spring',        group: :development
 
 gem "remotipart", "~> 1.2"
 gem "paperclip"
+gem "pandoc-ruby"
