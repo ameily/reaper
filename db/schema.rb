@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140608051210) do
+ActiveRecord::Schema.define(version: 20140616030601) do
+
+  create_table "attachments", force: true do |t|
+    t.string   "customer"
+    t.string   "name"
+    t.text     "description"
+    t.string   "category"
+    t.string   "file_name"
+    t.integer  "soul_id"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attachments", ["soul_id"], name: "index_attachments_on_soul_id"
 
   create_table "citations", force: true do |t|
     t.text     "body"
@@ -32,15 +48,14 @@ ActiveRecord::Schema.define(version: 20140608051210) do
 
   add_index "comments", ["soul_id"], name: "index_comments_on_soul_id"
 
-  create_table "soul_links", force: true do |t|
+  create_table "soul_journals", force: true do |t|
     t.integer  "soul_id"
-    t.integer  "link_id"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "soul_links", ["link_id"], name: "index_soul_links_on_link_id"
-  add_index "soul_links", ["soul_id"], name: "index_soul_links_on_soul_id"
+  add_index "soul_journals", ["soul_id"], name: "index_soul_journals_on_soul_id"
 
   create_table "souls", force: true do |t|
     t.string   "name"

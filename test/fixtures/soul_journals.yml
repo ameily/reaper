@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  soul_id: 
+  body: MyText
+
+two:
+  soul_id: 
+  body: MyText
