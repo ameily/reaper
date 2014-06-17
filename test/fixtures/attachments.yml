@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer: MyString
+  name: MyString
+  description: MyText
+  category: MyString
+  file_name: MyString
+  soul_id: 
+
+two:
+  customer: MyString
+  name: MyString
+  description: MyText
+  category: MyString
+  file_name: MyString
+  soul_id: 
