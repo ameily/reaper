@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :souls do
     resources :citations
-    resources :comments
+    resources :journals
     resources :attachments
   end
 

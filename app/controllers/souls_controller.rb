@@ -11,6 +11,10 @@ class SoulsController < ApplicationController
         @soul.reap_count = 0
         @soul.rot_count = 0
         if @soul.save
+            @soul.journals.create(
+                :body => "Soul Sacrificed",
+                :cat => 'status'
+            )
             redirect_to @soul
         else
             render 'new'
@@ -49,15 +53,17 @@ class SoulsController < ApplicationController
             ct = 'text/plain'
             ext = 'md'
         end
+        
+        filename = "#{self.slugify(@soul.name)}.#{ext}"
 
         if df == nil
             send_data @soul.description,
-                      filename: "#{@soul.name}.#{ext}",
+                      filename: filename,
                       type: ct
         else
             cv = PandocRuby.new(@soul.description, :standalone, :from => :markdown, :to => df)
             send_data cv.convert,
-                      filename: "#{@soul.name}.#{ext}",
+                      filename: filename,
                       type: ct
         end
     end
@@ -65,4 +71,27 @@ class SoulsController < ApplicationController
     private def create_params
         params.require(:soul).permit(:name, :description)
     end
+
+    def slugify(str)
+        #strip the string
+        ret = str.strip
+
+        #blow away apostrophes
+        ret.gsub! /['`]/,""
+
+        # @ --> at, and & --> and
+        ret.gsub! /\s*@\s*/, " at "
+        ret.gsub! /\s*&\s*/, " and "
+
+        #replace all non alphanumeric, underscore or periods with underscore
+         ret.gsub! /\s*[^A-Za-z0-9\.\-]\s*/, '-'
+
+         #convert double underscores to single
+         ret.gsub! /-+/,"-"
+
+         #strip off leading/trailing underscore
+         ret.gsub! /\A[\-\.]+|[\-\.]+\z/,""
+
+         ret
+      end
 end

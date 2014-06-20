@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  body: MyText
   soul_id: 
+  body: MyText
+  type: MyText
 
 two:
-  body: MyText
   soul_id: 
+  body: MyText
+  type: MyText

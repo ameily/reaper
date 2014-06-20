@@ -6,6 +6,10 @@ class CitationsController < ApplicationController
         
         respond_to do |format|
             if @citation.save
+                @soul.journals.create(
+                    :body => "Citation added: *#{@citation.url}*",
+                    :cat => "create"
+                )
                 format.json { render json: @citation, status: :created }
             else
                 format.json { render json: @citations.errors.messages, status: :bad_request }
@@ -16,7 +20,12 @@ class CitationsController < ApplicationController
     def destroy
         @citation = Citation.find(params[:id])
         respond_to do |format|
+            soul = @citation.soul
             if @citation.destroy
+                soul.journals.create(
+                    :body => "Citation deleted: *#{@citation.url}*",
+                    :cat => "delete"
+                )
                 format.json { render json: { }, status: :ok }
             else
                 

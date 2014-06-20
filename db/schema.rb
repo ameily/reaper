@@ -11,14 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140616030601) do
+ActiveRecord::Schema.define(version: 20140617125547) do
 
   create_table "attachments", force: true do |t|
     t.string   "customer"
     t.string   "name"
     t.text     "description"
     t.string   "category"
-    t.string   "file_name"
     t.integer  "soul_id"
     t.string   "attachment_file_name"
     t.string   "attachment_content_type"
@@ -39,18 +38,34 @@ ActiveRecord::Schema.define(version: 20140616030601) do
 
   add_index "citations", ["soul_id"], name: "index_citations_on_soul_id"
 
-  create_table "comments", force: true do |t|
-    t.text     "body"
+  create_table "journals", force: true do |t|
     t.integer  "soul_id"
+    t.text     "body"
+    t.string   "cat"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["soul_id"], name: "index_comments_on_soul_id"
+  add_index "journals", ["soul_id"], name: "index_journals_on_soul_id"
+
+  create_table "paper_submissions", force: true do |t|
+    t.string   "customer"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "past_projects", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "soul_journals", force: true do |t|
     t.integer  "soul_id"
     t.text     "body"
+    t.text     "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
