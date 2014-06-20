@@ -1,6 +1,6 @@
 class Attachment < ActiveRecord::Base
   belongs_to :soul
-  validates :name, :customer, :category, presence: true
+  validates :name, :category, presence: true
   has_attached_file :attachment
   #validates_attachment_presence :attachment
   #do_not_validate_attachment_file_type :attachment

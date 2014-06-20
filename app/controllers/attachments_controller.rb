@@ -25,6 +25,6 @@ class AttachmentsController < ApplicationController
     end
  
     private def attachment_params
-        params.require(:attachment).permit(:name, :description, :customer, :category, :attachment)
+        params.require(:attachment).permit(:name, :description, :category, :attachment)
     end
 end
