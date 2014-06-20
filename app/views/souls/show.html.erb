@@ -240,7 +240,15 @@ function addAttachment(obj) {
 <div class='row'>
     <div class='col-md-12'>
         <div class='page-header' style='margin-top: 0px'>
-            <h1><%= @soul.name %> <small>Reaper</small></h1>
+            <div class='pull-right'>
+                <a class='btn btn-info btn-md' href="<%= url_for :controller => 'souls', :action => 'edit', :id => @soul.id %>">
+                        <span class='glyphicon glyphicon-pencil'></span>
+                        Edit
+                    </a>
+                </div>
+            <h1>
+                <%= @soul.name %>
+            </h1>
         </div>
     </div>
 </div>
@@ -273,7 +281,10 @@ function addAttachment(obj) {
 
             <div>
                 <div><strong>Description</strong></div>
+                
+
                 <div id='soul-description'><%= @soul.description %></div>
+
                 <div class='text-right'>
                     <a href="<%= url_for :controller => 'souls', :action => 'convert_body', :format => 'docx' %>" target='_blank'>
                         docx
@@ -363,13 +374,6 @@ function addAttachment(obj) {
                         <%= f.label :description, class: "col-md-2 control-label" %>
                         <div class='col-md-8'>
                             <%= f.text_area :description, class: "form-control", :placeholder => "Description (Optional)" %>
-                        </div>
-                    </div>
-
-                    <div class='form-group'>
-                        <%= f.label :customer, class: "col-md-2 control-label" %>
-                        <div class='col-md-8'>
-                            <%= f.text_field :customer, class: "form-control", :placeholder => 'Customer (Required)' %>
                         </div>
                     </div>
 

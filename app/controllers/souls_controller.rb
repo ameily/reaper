@@ -14,7 +14,12 @@ class SoulsController < ApplicationController
             redirect_to @soul
         else
             render 'new'
+            #redirect_to :back
         end
+    end
+
+    def edit
+        @soul = Soul.find(params[:id])
     end
 
     def show

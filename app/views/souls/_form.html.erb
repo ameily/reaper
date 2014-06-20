@@ -1,0 +1,89 @@
+<%= form_for @soul, html: { :class => 'form-horizontal' } do |f| %>
+    <div class='form-group'>
+        <%= f.label :name, class: 'col-md-2 control-label' %>
+
+        <div class='col-md-7'>
+            <%= f.text_field :name, class: 'form-control', :placeholder => 'Name (Required)' %>
+        </div>
+
+        <div class='col-md-3 form-message'>
+            <% if @soul.errors.include? :name %>
+                <ul>
+                    <% @soul.errors[:name].each do |e| %>
+                        <li class='text-danger'><%= e %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+        </div>
+    </div>
+
+    <div class='form-group'>
+        <%= f.label :description, class: 'col-md-2 control-label' %>
+
+        <div class='col-md-7'>
+            <%= f.text_area :description, class: 'form-control', :placeholder => 'Description (Required)', :rows => 20 %>
+        </div>
+
+        <div class='col-md-3 form-message'>
+            <% if @soul.errors.include? :description %>
+                <ul>
+                    <% @soul.errors[:description].each do |e| %>
+                        <li class='text-danger'><%= e %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+        </div>
+    </div>
+
+    <div class='form-group'>
+        <div class='col-md-7 col-md-offset-2'>
+            <div class='text-right'>
+                Word Count: 
+                <span id='word-count' class='badge alert-success'>0</span>
+
+                <button id='count-words' class='btn btn-success btn-xs'>
+                    <span class='glyphicon glyphicon-refresh'></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class='form-group'>
+        <%= f.label :loe, 'Level of Effort', class: 'col-md-2 control-label' %>
+
+        <div class='col-md-7'>
+            <%= f.text_field :loe, class: 'form-control', :placeholder => 'Level of Effort (Optional)' %>
+        </div>
+
+        <div class='col-md-3 form-message'>
+            <% if @soul.errors.include? :loe %>
+                <ul>
+                    <% @soul.errors[:loe].each do |e| %>
+                        <li class='text-danger'><%= e %></li>
+                    <% end %>
+                </ul>
+            <% end %>
+        </div>
+    </div>
+
+    <div class='form-group'>
+        <div class='col-md-2'>&nbsp;</div>
+        <div class='col-md-7'>
+            <button class='btn btn-primary btn-lg'>
+                <span class='glyphicon glyphicon-ok'></span> Sacrifice
+            </button>
+
+            <div class='pull-right'>
+                <% if @soul.id %>
+                    <a class='btn btn-danger btn-lg' href="<%= url_for :controller => 'souls', :action => 'show', :id => @soul.id %>">
+                        <span class='glyphicon glyphicon-remove'></span> Cancel
+                    </a>
+                <% else %>
+                    <a class='btn btn-danger btn-lg' href="<%= url_for :controller => 'site', :action => 'index' %>">
+                        <span class='glyphicon glyphicon-remove'></span> Cancel
+                    </a>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
